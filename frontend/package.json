@@ -1,0 +1,8 @@
+{
+  "name": "@buffer-manager/frontend",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "node ../backend/src/server.js"
+  }
+}

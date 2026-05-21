@@ -1,0 +1,14 @@
+{
+  "name": "buffer-account-manager",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
+  "scripts": {
+    "dev": "npm --workspace backend run dev",
+    "start": "npm --workspace backend start",
+    "check": "npm --workspace backend run check"
+  }
+}

@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Buffer Manager</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <aside class="sidebar">
+      <div>
+        <p class="eyebrow">Buffer Manager</p>
+        <h1>Gestao de midias e posts</h1>
+      </div>
+      <nav>
+        <a href="#export">Exportar midias</a>
+        <a href="#database">Banco de dados</a>
+        <a href="#bufferBatch">Lote Buffer</a>
+        <a href="#create">Criar post</a>
+        <a href="#posts">Posts Buffer</a>
+      </nav>
+      <div class="status" id="configStatus">Carregando configuracao...</div>
+    </aside>
+
+    <main>
+      <section id="export" class="panel">
+        <div class="section-title">
+          <div>
+            <p class="eyebrow">API 1</p>
+            <h2>Exportar arquivos do Instagram</h2>
+          </div>
+          <button id="exportButton">Baixar e zipar</button>
+        </div>
+        <label class="check">
+          <input type="checkbox" id="forceDownload" />
+          Baixar novamente arquivos ja existentes
+        </label>
+        <pre id="exportResult">Aguardando execucao.</pre>
+      </section>
+
+      <section id="database" class="panel">
+        <div class="section-title">
+          <div>
+            <p class="eyebrow">Postgres</p>
+            <h2>Exportar JSON para o banco</h2>
+          </div>
+          <button id="databaseButton">Importar dataset</button>
+        </div>
+        <pre id="databaseResult">Aguardando importacao.</pre>
+      </section>
+
+      <section id="bufferBatch" class="panel">
+        <div class="section-title">
+          <div>
+            <p class="eyebrow">Buffer em lote</p>
+            <h2>Publicar dados do banco</h2>
+          </div>
+          <div class="button-row">
+            <button id="publishAllButton">Enviar para fila</button>
+            <button id="scheduleAllButton">Agendar 3 por dia</button>
+          </div>
+        </div>
+        <div class="form-grid compact">
+          <label>
+            Channel ID
+            <input id="batchChannelId" placeholder="Usa BUFFER_CHANNEL_ID se vazio" />
+          </label>
+          <label>
+            Data inicial
+            <input id="scheduleStartDate" type="date" />
+          </label>
+          <label>
+            Limite
+            <input id="batchLimit" type="number" min="1" placeholder="Opcional" />
+          </label>
+        </div>
+        <label class="check">
+          <input type="checkbox" id="forceBatch" />
+          Reenviar posts ja marcados como sucesso
+        </label>
+        <pre id="batchResult">Aguardando envio.</pre>
+      </section>
+
+      <section id="create" class="panel">
+        <div class="section-title">
+          <div>
+            <p class="eyebrow">API 2</p>
+            <h2>Criar post no Buffer</h2>
+          </div>
+          <button id="createButton">Criar post</button>
+        </div>
+        <div class="form-grid">
+          <label>
+            Texto
+            <textarea id="postText" rows="6">O Senhor conhece os que sao seus</textarea>
+          </label>
+          <label>
+            Channel ID
+            <input id="channelId" placeholder="Usa BUFFER_CHANNEL_ID se vazio" />
+          </label>
+          <label>
+            Modo
+            <select id="postMode">
+              <option value="addToQueue">Adicionar na fila</option>
+              <option value="customScheduled">Agendar data especifica</option>
+            </select>
+          </label>
+          <label>
+            Due at
+            <input id="dueAt" type="datetime-local" />
+          </label>
+          <label>
+            URL da midia
+            <input id="assetUrl" placeholder="https://...jpg ou https://...mp4" />
+          </label>
+          <label>
+            Tipo da midia
+            <select id="assetType">
+              <option value="image">Imagem</option>
+              <option value="video">Video</option>
+            </select>
+          </label>
+        </div>
+        <pre id="createResult">Pronto para enviar.</pre>
+      </section>
+
+      <section id="posts" class="panel">
+        <div class="section-title">
+          <div>
+            <p class="eyebrow">API 3</p>
+            <h2>Consultar posts paginados</h2>
+          </div>
+          <button id="postsButton">Buscar posts</button>
+        </div>
+        <div class="form-grid compact">
+          <label>
+            Status
+            <select id="statusFilter">
+              <option value="sent">Enviados</option>
+              <option value="scheduled">Agendados</option>
+              <option value="draft">Rascunhos</option>
+            </select>
+          </label>
+          <label>
+            Cursor after
+            <input id="afterCursor" placeholder="endCursor da pagina anterior" />
+          </label>
+          <label>
+            Quantidade
+            <input id="firstCount" type="number" value="20" min="1" max="100" />
+          </label>
+        </div>
+        <pre id="postsResult">Nenhuma consulta realizada.</pre>
+      </section>
+    </main>
+
+    <script src="/app.js" type="module"></script>
+  </body>
+</html>
